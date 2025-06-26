@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Purchase Invoice Generator</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body>
+
+    <h1 class="text-4xl font-bold text-gray-800 mb-8 mt-4 print-hide">Bike Purchase Invoice Generator</h1>
+
+    <!-- Message Box -->
+    <div id="messageBox" class="mb-4 px-4 py-3 rounded-lg shadow-md text-center hidden w-full max-w-md print-hide">
+    </div>
+
+    <!-- Input Form Section -->
+    <div id="invoiceForm" class="w-full max-w-4xl bg-white p-8 rounded-xl shadow-2xl space-y-6">
+        <!-- Invoice Header Details -->
+        <div class="section-title">Invoice Details</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex flex-col input-field">
+                <label for="invoiceNumber" class="text-sm font-medium text-gray-700 mb-1">Invoice No.</label>
+                <input type="text" id="invoiceNumber" name="invoiceNumber" placeholder="e.g., 001" readonly>
+            </div>
+            <div class="flex flex-col input-field">
+                <label for="invoiceDate" class="text-sm font-medium text-gray-700 mb-1">Date</label>
+                <input type="date" id="invoiceDate" name="invoiceDate">
+            </div>
+        </div>
+
+        <!-- Bill To Details -->
+        <div class="section-title">Bill To</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex flex-col input-field">
+                <label for="billToName" class="text-sm font-medium text-gray-700 mb-1">Name <span
+                        class="text-red-500">*</span></label>
+                <input type="text" id="billToName" name="billToName" placeholder="Customer Name" required>
+            </div>
+            <div class="flex flex-col input-field">
+                <label for="billToS_o" class="text-sm font-medium text-gray-700 mb-1">S/o</label>
+                <input type="text" id="billToS_o" name="billToS_o" placeholder="Father's Name">
+            </div>
+            <div class="flex flex-col input-field">
+                <label for="billToAddress" class="text-sm font-medium text-gray-700 mb-1">Address</label>
+                <input type="text" id="billToAddress" name="billToAddress" placeholder="Customer Address">
+            </div>
+            <div class="flex flex-col input-field">
+                <label for="billToCell" class="text-sm font-medium text-gray-700 mb-1">Cell</label>
+                <input type="tel" id="billToCell" name="billToCell" placeholder="Customer Phone No.">
+            </div>
+        </div>
+
+        <!-- TD Checkbox and Fields -->
+        <div class="section-title">TD Details</div>
+        <div class="flex items-center mb-4">
+            <input type="checkbox" id="tdCheck"
+                class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded mr-2">
+            <label for="tdCheck" class="text-sm font-medium text-gray-700">Include TD Details</label>
+        </div>
+        <div id="tdFields" class="grid grid-cols-1 md:grid-cols-2 gap-4 hidden">
+            <div class="flex flex-col input-field">
+                <label for="tdName" class="text-sm font-medium text-gray-700 mb-1">TD Name</label>
+                <input type="text" id="tdName" name="tdName" placeholder="TD Representative Name">
+            </div>
+            <div class="flex flex-col input-field">
+                <label for="tdNumber" class="text-sm font-medium text-gray-700 mb-1">TD Number</label>
+                <input type="text" id="tdNumber" name="tdNumber" placeholder="TD Phone Number">
+            </div>
+        </div>
+
+        <!-- Product Description -->
+        <div class="section-title">Product Description (Bike Details)</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex flex-col input-field">
+                <label for="makersName" class="text-sm font-medium text-gray-700 mb-1">Maker's Name <span
+                        class="text-red-500">*</span></label>
+                <input type="text" id="makersName" name="makersName" value="Royal Enfield Classic 350 BS4"
+                    placeholder="e.g., Royal Enfield Classic 350 BS4" required>
+            </div>
+            <div class="flex flex-col input-field">
+                <label for="registeredOwner" class="text-sm font-medium text-gray-700 mb-1">Registered Owner</label>
+                <input type="text" id="registeredOwner" name="registeredOwner"
+                    placeholder="Bike's Current Registered Owner">
+            </div>
+            <div class="flex flex-col input-field">
+                <label for="regNo" class="text-sm font-medium text-gray-700 mb-1">Reg. No</label>
+                <input type="text" id="regNo" name="regNo" placeholder="Registration Number">
+            </div>
+            <div class="flex flex-col input-field">
+                <label for="bikeModel" class="text-sm font-medium text-gray-700 mb-1">Model</label>
+                <input type="text" id="bikeModel" name="bikeModel" placeholder="Bike Model Name">
+            </div>
+            <div class="flex flex-col input-field">
+                <label for="chassisNumber" class="text-sm font-medium text-gray-700 mb-1">Chassis Number (5
+                    Digits)</label>
+                <input type="number" id="chassisNumber" name="chassisNumber" placeholder="e.g., 12345" min="0"
+                    max="99999">
+            </div>
+            <div class="flex flex-col input-field">
+                <label for="engineNumber" class="text-sm font-medium text-gray-700 mb-1">Engine Number (5
+                    Digits)</label>
+                <input type="number" id="engineNumber" name="engineNumber" placeholder="e.g., 54321" min="0"
+                    max="99999">
+            </div>
+            <div class="flex flex-col input-field">
+                <label for="colour" class="text-sm font-medium text-gray-700 mb-1">Colour</label>
+                <input type="text" id="colour" name="colour" placeholder="e.g., Black, Red">
+            </div>
+        </div>
+
+        <!-- Documents Checkboxes -->
+        <div class="flex flex-col input-field">
+            <label class="text-sm font-medium text-gray-700 mb-2">Documents</label>
+            <div class="documents-grid">
+                <div class="flex items-center">
+                    <input type="checkbox" id="docRC" name="documents" value="RC"
+                        class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
+                    <label for="docRC" class="ml-2 text-sm text-gray-700">RC</label>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="docCC" name="documents" value="CC"
+                        class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
+                    <label for="docCC" class="ml-2 text-sm text-gray-700">CC</label>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="docTRC" name="documents" value="TRC"
+                        class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
+                    <label for="docTRC" class="ml-2 text-sm text-gray-700">TRC</label>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="docNOC" name="documents" value="NOC"
+                        class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
+                    <label for="docNOC" class="ml-2 text-sm text-gray-700">NOC</label>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="docAadhaar" name="documents" value="Aadhaar"
+                        class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
+                    <label for="docAadhaar" class="ml-2 text-sm text-gray-700">Aadhaar</label>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Payment Details -->
+        <div class="section-title">Payment Details</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex flex-col input-field">
+                <label for="price" class="text-sm font-medium text-gray-700 mb-1">Price <span
+                        class="text-red-500">*</span></label>
+                <input type="number" id="price" name="price" value="0" min="0" required>
+            </div>
+            <div class="flex flex-col input-field">
+                <label for="paid" class="text-sm font-medium text-gray-700 mb-1">Paid</label>
+                <input type="number" id="paid" name="paid" value="0" min="0">
+            </div>
+            <!-- Due and Total are calculated fields -->
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-1">Due</label>
+                <span id="displayDue"
+                    class="p-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-700 font-bold">₹0.00</span>
+            </div>
+            <div class="flex flex-col">
+                <label class="text-sm font-medium text-gray-700 mb-1">Total (Price)</label>
+                <span id="displayTotal"
+                    class="p-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-700 font-bold">₹0.00</span>
+            </div>
+
+            <!-- Conditional Due Date Field - Now always present but hidden/shown by JS -->
+            <div id="dueDateField" class="flex flex-col input-field md:col-span-2 hidden">
+                <label for="dueDate" class="text-sm font-medium text-gray-700 mb-1">Due Date</label>
+                <input type="date" id="dueDate" name="dueDate">
+            </div>
+        </div>
+
+        <!-- Generate Invoice Button -->
+        <div class="flex justify-center mt-8">
+            <button id="generateInvoiceBtn" class="btn btn-purple text-xl">
+                Generate Invoice
+            </button>
+        </div>
+    </div>
+
+    <!-- Generated Invoice Section (initially hidden) -->
+    <div id="invoicePreview"
+        class="w-full max-w-4xl bg-white p-8 rounded-xl shadow-2xl relative hidden invoice-preview-area">
+        <button id="editInvoiceBtn" class="btn btn-gray absolute top-4 right-4 flex items-center print-hide">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M10.293 15.707a1 1 0 010-1.414L12.586 12H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                    clip-rule="evenodd" />
+            </svg>
+            Edit
+        </button>
+        <button id="printInvoiceBtn" class="btn btn-blue absolute top-4 right-20 flex items-center print-hide">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M5 4V3a1 1 0 011-1h8a1 1 0 011 1v1h1a2 2 0 012 2v7a2 2 0 01-2 2h-1.586l-2.707 2.707A.997.997 0 0111 18h-2a.997.997 0 01-.707-.293L5.586 13H4a2 2 0 01-2-2V6a2 2 0 012-2h1zm0 2h10v5H5V6zm8 6a1 1 0 100 2h2a1 1 0 100-2h-2z"
+                    clip-rule="evenodd" />
+            </svg>
+            Print
+        </button>
+
+        <!-- Invoice Header (mimicking PDF header alignment) -->
+        <div class="mb-4 pb-2 invoice-header-print">
+            <div class="logo-container-print">
+                <img style="max-width: 15%;" src="NBZ LOGO.png"
+                    alt="
+                    y Logo">
+            </div>
+
+            <div class="company-info-print">
+                <h2 class="text-2xl font-bold text-gray-900 mb-0 leading-tight">NAYEEM BIKE ZONE</h2>
+                <p class="text-gray-600 text-xs leading-tight">Beside New Bus Stand, Kodad road, HUZURNAGAR -508204.</p>
+                <p class="text-gray-600 text-xs leading-tight">Cell: 9848725297, 8522922262.</p>
+            </div>
+
+            <div class="invoice-meta-print">
+                <p class="text-gray-700 text-xs mb-1">Invoice No: <span class="font-semibold"
+                        id="invoiceNoDisplay"></span></p>
+                <p class="text-gray-700 text-xs">Date: <span class="font-semibold" id="invoiceDateDisplay"></span></p>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 text-center col-span-3 invoice-title-print">PURCHASE INVOICE
+            </h3>
+        </div>
+
+        <!-- Bill To Details and TD Details side-by-side -->
+        <div class="bill-to-td-grid-print">
+            <!-- Bill To Section -->
+            <div class="mb-4 pb-2 section-preview">
+                <h4 class="font-semibold text-base text-gray-800 mb-1 section-title">Bill To:</h4>
+                <div class="bill-to-info-print">
+                    <p class="text-gray-700 text-sm"><span class="font-medium">Name:</span> <span
+                            id="billToNameDisplay"></span></p>
+                    <p class="text-gray-700 text-sm"><span class="font-medium">S/o:</span> <span
+                            id="billToSoDisplay"></span></p>
+                    <p class="text-gray-700 text-sm"><span class="font-medium">Address:</span> <span
+                            id="billToAddressDisplay"></span></p>
+                    <p class="text-gray-700 text-sm"><span class="font-medium">Cell:</span> <span
+                            id="billToCellDisplay"></span></p>
+                </div>
+            </div>
+
+            <!-- TD Details Section (Conditional) -->
+            <div id="tdDetailsDisplaySection" class="mb-4 pb-2 section-preview hidden">
+                <h4 class="font-semibold text-base text-gray-800 mb-1 section-title">TD Details:</h4>
+                <div class="td-info-print">
+                    <p class="text-gray-700 text-sm"><span class="font-medium">Name:</span> <span
+                            id="tdNameDisplay"></span></p>
+                    <p class="text-gray-700 text-sm"><span class="font-medium">Number:</span> <span
+                            id="tdNumberDisplay"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Description Table -->
+        <div class="mb-4 section-preview">
+            <h4 class="font-semibold text-base text-gray-800 mb-1 section-title">Product Description:</h4>
+            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200 product-description-table">
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-3 py-1 whitespace-nowrap text-sm text-gray-900">Maker's Name:</td>
+                            <td class="px-3 py-1 whitespace-nowrap text-sm text-gray-900 font-medium"
+                                id="makersNameDisplay"></td>
+                            <td class="px-3 py-1 whitespace-nowrap text-sm text-gray-900">Registered Owner:</td>
+                            <td class="px-3 py-1 whitespace-nowrap text-sm text-gray-900" id="registeredOwnerDisplay">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-1 whitespace-nowrap text-sm text-gray-900">Reg. No:</td>
+                            <td class="px-3 py-1 whitespace-nowrap text-sm text-gray-900" id="regNoDisplay"></td>
+                            <td class="px-3 py-1 whitespace-nowrap text-sm text-gray-900">Model:</td>
+                            <td class="px-3 py-1 whitespace-nowrap text-sm text-gray-900" id="bikeModelDisplay"></td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-1 whitespace-nowrap text-sm text-gray-900">Chassis Number:</td>
+                            <td class="px-3 py-1 whitespace-nowrap text-sm text-gray-900" id="chassisNumberDisplay">
+                            </td>
+                            <td class="px-3 py-1 whitespace-nowrap text-sm text-gray-900">Engine Number:</td>
+                            <td class="px-3 py-1 whitespace-nowrap text-sm text-gray-900" id="engineNumberDisplay"></td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-1 whitespace-nowrap text-sm text-gray-900">Colour:</td>
+                            <td class="px-3 py-1 whitespace-nowrap text-sm text-gray-900" id="colourDisplay"></td>
+                            <td class="px-3 py-1 whitespace-nowrap text-sm text-gray-900">Documents:</td>
+                            <td class="px-3 py-1 whitespace-nowrap text-sm text-gray-900" id="documentsDisplay"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Financial Summary -->
+        <div class="flex justify-end mt-4 financial-summary financial-summary-print">
+            <div class="w-full md:w-1/2 lg:w-1/3 space-y-1 text-right">
+                <div class="flex justify-between">
+                    <span class="font-semibold text-gray-800 text-sm">Price:</span>
+                    <span class="text-gray-900 text-sm" id="priceDisplay"></span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-semibold text-gray-800 text-sm">Paid:</span>
+                    <span class="text-gray-900 text-sm" id="paidDisplay"></span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-semibold text-gray-800 text-sm">Due:</span>
+                    <span class="text-gray-900 text-sm" id="dueDisplay"></span>
+                </div>
+                <div class="flex justify-between hidden">
+                    <span class="font-semibold text-gray-800 text-sm">Due:</span>
+                    <span class="text-gray-900 text-sm" id="dueDateDisplay"></span>
+                </div>
+                <div
+                    class="flex justify-between text-xl font-bold text-purple-700 border-t-2 border-purple-200 pt-1 mt-1">
+                    <span>Total:</span>
+                    <span id="totalDisplay"></span>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-center text-gray-500 mt-8 text-xs thank-you-note-print">Thank you for your purchase!</p>
+
+        <!-- Signature Fields -->
+        <div class="signature-section-print">
+            <div id="sellerSignatureBox" class="signature-box-print">
+                <p>_________________________</p>
+                <p>Seller Signature</p>
+            </div>
+            <div id="tdSignatureBox" class="signature-box-print hidden">
+                <p>_________________________</p>
+                <p>TD Signature</p>
+            </div>
+            <div id="buyerSignatureBox" class="signature-box-print">
+                <p>_________________________</p>
+                <p>Buyer Signature</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
